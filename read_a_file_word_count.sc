@@ -1,4 +1,6 @@
-// word count 
+// exemple: word count 
+// author: xiaoxiao
+
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkContext._
 
