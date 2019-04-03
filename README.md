@@ -1,4 +1,4 @@
-# SPARK
+# SPARK SCALA
 
 Fisrt step in learning SCALA.
 
