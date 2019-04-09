@@ -10,11 +10,14 @@ distData.getNumPartitions()
 distData.reduce(lambda a,b:a+b)
 
 #read a file(external datasets)
-#the file will be read as a collection of lines
-distFile = sc.textFile("C:\\Users\\Xiaoxiao\\Documents\\SVN_IP_mfps.txt")
+# 1. the file will be read as a Collection of Lines
+lines = sc.textFile("C:\\Users\\Xiaoxiao\\Documents\\SVN_IP_mfps.txt")
+# 2. get length of each line
+lineLengths = lines.map(lambda a:len(a))
 #once added, we can do dataset operations
-#for example, add up the sizes of all the lines by using 'map' and 'reduce' operations
-distFile.map(lambda s:len(s)).reduce(lambda a,b:a+b)
-#print each line in file
+# 3. get total length of file 
+# for example, add up the sizes of all the lines by using 'map' and 'reduce' operations
+totalLenghth = lineLengths.reduce(lambda a,b:a+b)
+# 4. print each line in file
 from __future__ import print_function
-distFile.foreach(print)
+lines.foreach(print)
