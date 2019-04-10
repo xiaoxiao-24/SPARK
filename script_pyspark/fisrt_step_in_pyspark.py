@@ -9,7 +9,8 @@ distData.getNumPartitions()
 #par exemple, add up the elements of the list (distData)
 distData.reduce(lambda a,b:a+b)
 
-#read a file(external datasets)
+#read a file(external datasets),count line length
+#-------------------------------------------------
 # 1. the file will be read as a Collection of Lines
 lines = sc.textFile("C:\\Users\\Xiaoxiao\\Documents\\SVN_IP_mfps.txt")
 # 2. get length of each line
@@ -21,3 +22,12 @@ totalLenghth = lineLengths.reduce(lambda a,b:a+b)
 # 4. print each line in file
 from __future__ import print_function
 lines.foreach(print)
+
+#define and call a function
+#-------------------------------------------------
+def WordCount(s):
+	words = s.split(" ")
+	return len(words)
+
+file = sc.textFile("C:\\Users\\Xiaoxiao\\Documents\\UnderstandingClosures.txt")
+nb_words = file.map(WordCount)
