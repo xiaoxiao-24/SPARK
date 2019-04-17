@@ -11,8 +11,11 @@ distData.reduce(lambda a,b:a+b)
 
 #read a file(external datasets),count line length
 #-------------------------------------------------
-# 1. the file will be read as a Collection of Lines
+# 1. the file will be read as a Collection of Lines !!!
+# each line is an element in the list
 lines = sc.textFile("C:\\Users\\Xiaoxiao\\Documents\\SVN_IP_mfps.txt")
+lines.collect()
+# ['http://svngdrpi.gdrpi.fr/svn/GDRPI/PROD', '', '172.21.56.50']
 # 2. get length of each line
 lineLengths = lines.map(lambda a:len(a))
 #once added, we can do dataset operations
@@ -31,3 +34,15 @@ def WordCount(s):
 
 file = sc.textFile("C:\\Users\\Xiaoxiao\\Documents\\UnderstandingClosures.txt")
 nb_words = file.map(WordCount)
+
+# --- flatmap() ---
+# transform a text file into a list of words
+lines_split = lines.map(lambda x: x.split('/'))
+lines_split.collect()
+# [['http:', '', 'svngdrpi.gdrpi.fr', 'svn', 'GDRPI', 'PROD'], [''], ['172.21.56.50']]
+lines_flat = lines.flatMap(lambda line: line.split('/'))
+lines_flat.collect()
+# ['http:', '', 'svngdrpi.gdrpi.fr', 'svn', 'GDRPI', 'PROD', '', '172.21.56.50']
+lines_flat2 = lines_flat.flatMap(lambda line: line.split('.'))
+lines_flat2.collect()
+# ['http:', '', 'svngdrpi', 'gdrpi', 'fr', 'svn', 'GDRPI', 'PROD', '', '172', '21', '56', '50']
