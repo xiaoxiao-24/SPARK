@@ -15,6 +15,7 @@ distData.reduce(lambda a,b:a+b)
 # each line is an element in the list
 lines = sc.textFile("C:\\Users\\Xiaoxiao\\Documents\\SVN_IP_mfps.txt")
 lines.collect()
+lines.foreach(print)
 # ['http://svngdrpi.gdrpi.fr/svn/GDRPI/PROD', '', '172.21.56.50']
 # 2. get length of each line
 lineLengths = lines.map(lambda a:len(a))
@@ -46,3 +47,13 @@ lines_flat.collect()
 lines_flat2 = lines_flat.flatMap(lambda line: line.split('.'))
 lines_flat2.collect()
 # ['http:', '', 'svngdrpi', 'gdrpi', 'fr', 'svn', 'GDRPI', 'PROD', '', '172', '21', '56', '50']
+
+
+# filter()
+lines_filter = lines_flat.filter(lambda x:'r' in x)
+lines_filter.collect()
+# ['svngdrpi.gdrpi.fr']
+
+
+# create a DataFrame from a JSON file
+df = spark.read.json("C:\\Users\\Xiaoxiao\\Documents\\people.json")
