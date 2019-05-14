@@ -41,6 +41,7 @@ nb_words = file.map(WordCount)
 lines_split = lines.map(lambda x: x.split('/'))
 lines_split.collect()
 # [['http:', '', 'svngdrpi.gdrpi.fr', 'svn', 'GDRPI', 'PROD'], [''], ['172.21.56.50']]
+
 lines_flat = lines.flatMap(lambda line: line.split('/'))
 lines_flat.collect()
 # ['http:', '', 'svngdrpi.gdrpi.fr', 'svn', 'GDRPI', 'PROD', '', '172.21.56.50']
@@ -48,12 +49,29 @@ lines_flat2 = lines_flat.flatMap(lambda line: line.split('.'))
 lines_flat2.collect()
 # ['http:', '', 'svngdrpi', 'gdrpi', 'fr', 'svn', 'GDRPI', 'PROD', '', '172', '21', '56', '50']
 
+# --- map() v.s. flatMap() ---
+rdd = sc.parallelize([2, 3, 4])
+rdd.map(lambda x:range(1,x)).collect()                                                         
+>>> [[1], [1, 2], [1, 2, 3]] 
+rdd.flatMap(lambda x:range(1,x)).collect()                                                     
+>>> [1, 1, 2, 1, 2, 3]                                                                                 
+sorted(rdd.flatMap(lambda x:range(1,x)).collect())                                             
+>>> [1, 1, 1, 2, 2, 3]   
 
-# filter()
+# --- flatMapValues() ---
+# Pass each value in the key-value pair RDD through a flatMap function without changing the keys; this also retains the original RDD’s partitioning.
+x = sc.parallelize([("a", ["x", "y", "z"]), ("b", ["p", "r"])]) 
+x.flatMap(lambda x:x).collect()                                                                
+>>> ['a', ['x', 'y', 'z'], 'b', ['p', 'r']] 
+x.flatMapValues(lambda x:x).collect()                                                          
+>>> [('a', 'x'), ('a', 'y'), ('a', 'z'), ('b', 'p'), ('b', 'r')]
+
+# --- filter() ---
 lines_filter = lines_flat.filter(lambda x:'r' in x)
 lines_filter.collect()
 # ['svngdrpi.gdrpi.fr']
 
 
-# create a DataFrame from a JSON file
+# create a DataFrame from a JSON/text file
 df = spark.read.json("C:\\Users\\Xiaoxiao\\Documents\\people.json")
+df = spark.read.text("C:\\Users\\Xiaoxiao\\Documents\\people.txt")
