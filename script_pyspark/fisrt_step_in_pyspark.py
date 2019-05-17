@@ -25,7 +25,7 @@ lineLengths = lines.map(lambda a:len(a))
 totalLenghth = lineLengths.reduce(lambda a,b:a+b)
 # 4. print each line in file
 from __future__ import print_function
-lines.foreach(print)
+lines.foreach(print) # only work with python3
 
 #define and call a function
 #-------------------------------------------------
@@ -71,7 +71,13 @@ lines_filter = lines_flat.filter(lambda x:'r' in x)
 lines_filter.collect()
 # ['svngdrpi.gdrpi.fr']
 
+# --- join() ---
+x = sc.parallelize([("a",1),("b",4)])                                                 
+y = sc.parallelize([("a",2),("a",3)])                                                 
+x.join(y).collect() # join by key                                                                  
+#[('a', (1, 3)), ('a', (1, 2))]
 
 # create a DataFrame from a JSON/text file
 df = spark.read.json("C:\\Users\\Xiaoxiao\\Documents\\people.json")
 df = spark.read.text("C:\\Users\\Xiaoxiao\\Documents\\people.txt")
+

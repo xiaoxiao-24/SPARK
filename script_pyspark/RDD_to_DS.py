@@ -6,6 +6,11 @@ from pyspark.sql import Row
 
 Person = Row('name','age') # specify the schema
 
+schemaPerson = StructType([
+	StructField("name",StringType(),True),
+	StructField("age",IntegerType(),True)
+])
+
 people_lines_RDD = sc.textFile("/user/amy_ds/sample_dataset/people.txt") # read text as an RDD
 people_RDD = people_lines_RDD.map(lambda a:a.split(","))  # split champ, each line is a list
 people_tuple = people_RDD.map(lambda a:(a[0],a[1])) # make each line a tuple
@@ -14,6 +19,8 @@ person_df = spark.createDataFrame(person)
 person_df = spark.createDataFrame(people_RDD, Person)
 person_df = spark.createDataFrame(people_tuple, Person)
 person_df = person.toDF()   # 4 ways to transform an RDD to a DataFrame
+
+person_df = spark.createDataFrame(people_RDD, schemaPerson)
 
 # order by
 person_df.orderBy(["age","name"],ascending=[0,1]).show()   
