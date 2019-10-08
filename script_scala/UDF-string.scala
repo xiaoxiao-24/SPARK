@@ -67,7 +67,7 @@ dataset.withColumn("length",UDF6Length('text)).show
 
 
 // create a UDF: concat
-val concat: Array[String] => String = _(0).concat(_(1))
+val concat: Array[String] => String = concat(_(0),_(1))
 
 object add {
    def addInt( a:Int, b:Int ) : Int = {

@@ -18,6 +18,7 @@ df.printSchema
 df.select("name").show
 df.select($"age"+3).show
 df.filter($"age" > 30).show
+df.filter(line => line(1) == "John").show
 df.groupBy("age").count().show
 
 // Create a temporary view 'employee' of 'df' DataFrame so we can use sql directly

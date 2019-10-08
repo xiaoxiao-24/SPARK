@@ -1,3 +1,7 @@
+# ---------------------------
+# RDD to DataFrame
+# ---------------------------
+
 from pyspark.sql import SQLContext
 from pyspark.sql.types import *
 
@@ -74,3 +78,16 @@ taxi_df.printSchema()
 # first register the dataframe as a named temporary table
 taxi_df.registerTempTable("taxi")
 sqlContext.sql("SELECT vendor_id,COUNT(*) FROM taxi GROUP BY vendor_id").show()
+
+
+# ---------------------------
+# CSV to DataFrame
+# ---------------------------
+
+uk_postcode = spark.read.options(header="true").csv("/user/xiaoxiao/uk-postcode.csv")
+
+uk_postcode.show(2)
+
+uk_postcode.createOrReplaceTempView("postcode")
+spark.sql("select * from postcode").show(5)
+spark.sql("select count(1) from postcode").show()

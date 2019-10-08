@@ -5,13 +5,19 @@ case class Employee(name:String, age:Long)
 
 // 2. Assigning a Dataset ‘caseClassDS’ to store the record of Andrew.
 val caseClassDS = Seq(Employee("Andrew", 55)).toDS()
-
-// 3. Displaying the Dataset ‘caseClassDS’.
+// Displaying the Dataset ‘caseClassDS’.
 caseClassDS.show
 
 
-// 4. Creating a primitive Dataset to demonstrate mapping of DataFrames into Datasets.
+// 3. set PATH of json file
+val path = "/user/xiaoxiao/employee.json"
+// create Dataset from file and class 'employee'
+val employeeDS = spark.read.json(path).as[Employee]
+employeeDS.show
+
+
+// 1. Creating a primitive Dataset to demonstrate mapping of DataFrames into Datasets.
 val primitiveDS = Seq(1,2,3).toDS()
 
-// 5. Assigning the above sequence into an array.
+// 2. Assigning the above sequence into an array.
 primitiveDS.map(_+1).collect
