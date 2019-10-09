@@ -66,14 +66,18 @@ dataset.withColumn("length",UDF6Length('text)).show
 
 
 
-// create a UDF: concat
+// create a UDF: concat (?)
 val concat: Array[String] => String = concat(_(0),_(1))
 
-object add {
+
    def addInt( a:Int, b:Int ) : Int = {
       var sum:Int = 0
       sum = a + b
       return sum
    }
-}
 
+def multiInt(a: Int, b: Int):Int = {
+    var mul:Int = 1
+    mul = a*b
+    return mul
+}
