@@ -21,6 +21,13 @@ dataset.withColumn("upper",upperUDF('text)).show
 // methode 2
 spark.udf.register("myUpper",(input: String) => input.toUpperCase)
 
+// methode 3
+val pay = Seq((0,"John","man",3000,4),(1,"Lucie","woman",2500,5)).toDF("id","name","sex","salary","nb_month")
+val toUpper  = udf[String,String](_.toUpperCase)
+pay.select(toUpper(pay("sex"))).show
+pay.withColumn("sex1",toUpper('sex)).show
+
+
 // list all the functions like %pper%
 spark.catalog.listFunctions.filter('name like "%pper%").show(false)
 
@@ -69,12 +76,20 @@ dataset.withColumn("length",UDF6Length('text)).show
 // create a UDF: concat (?)
 val concat: Array[String] => String = concat(_(0),_(1))
 
+val toUpper  = udf[String,String](_.toUpperCase)
+val toConcat = udf[Array[String],String](_(0).concat(_(1)))
 
-   def addInt( a:Int, b:Int ) : Int = {
-      var sum:Int = 0
-      sum = a + b
-      return sum
-   }
+def conCat(a:String,b:String):String = {
+    var res:String = ""
+    res = a.concat(b)
+    return res
+}
+
+def addInt( a:Int, b:Int ) : Int = {
+    var sum:Int = 0
+    sum = a + b
+    return sum
+}
 
 def multiInt(a: Int, b: Int):Int = {
     var mul:Int = 1

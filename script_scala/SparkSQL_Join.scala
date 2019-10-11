@@ -3,10 +3,10 @@
 
 // exemple 1 
 
-// dataset 1
+// dataframe 1
 val makerspace = spark.read.option("header","true").csv("/user/xiaoxiao/uk-makerspaces-identifiable-data.csv")
 
-// dataset 2
+// dataframe 2
 val postCode = spark.read.option("header","true").csv("/user/xiaoxiao/uk-postcode.csv").withColumn("PostCode1",concat(col("PostCode"), lit(" ")))
 
 // join

@@ -16,6 +16,8 @@ case class AbTest(userId: String, color: String, count: Integer)
 
 // 3. import CSV
 val resultDS = spark.read.schema(customSchema).option("delimiter",",").csv("C:\\Users\\Xiaoxiao\\Documents\\Git\\SPARK\\script_scala\\Comparison_RDD_DF_DS\\testevent.csv").as[AbTest]
+// pas obligatoirement besoin de case class???
+val resultDS = spark.read.schema(customSchema).option("delimiter",",").csv("/user/xiaoxiao/testevent.csv")
 
 // 4. group 
 val finalResultDS = resultDS.groupBy("color").sum("count")
