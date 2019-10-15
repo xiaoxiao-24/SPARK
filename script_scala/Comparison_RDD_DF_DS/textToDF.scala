@@ -5,7 +5,7 @@ import spark.implicits._
 
 // ?
 import org.apache.spark.sql.Encoder
-import org.apache.spark.sal.catalyst.encoders.ExpressionEncoder // for RDD, who use encoders for serialization
+import org.apache.spark.sql.catalyst.encoders.ExpressionEncoder // for RDD, who use encoders for serialization
 
 
 // 1. Creating a class ‘Employee’ to store name and age of an employee.

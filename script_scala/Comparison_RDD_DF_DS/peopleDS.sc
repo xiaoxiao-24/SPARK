@@ -1,4 +1,7 @@
 // create Dataset
+import org.apache.spark.sql.{DataFrame, Encoders}
+import org.apache.spark.sql.Encoders
+
 
 // define class
 case class Person(name: String, age: Long)
