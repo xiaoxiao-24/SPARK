@@ -113,7 +113,7 @@ sql("select handsettype,count(1) from imsi group by handsettype").show
 +-----------+--------+
 
 // --------------------------------------------------------------------
-// DataFrame to CSV
+// DataFrame to CSV / JSON
 // --------------------------------------------------------------------
 
 // write to HDFS
@@ -126,13 +126,28 @@ ImsiDF.write.format("csv").mode("overwrite").option("header", "true").option("se
 
 ImsiDF.coalesce(1).write.mode("overwrite").format("com.databricks.spark.csv").option("header", "true").save("/user/xiaoxiao/neumann_ismi2")
 
+ImsiDF.write.format("json").mode(SaveMode.Overwrite).option("header", "true").json("/user/xiaoxiao/neumann_ismi_json")
 
 // read the file qu'on a 'write'
 val ImsiDFRead = spark.read.option("header", "true").csv("/user/xiaoxiao/neumann_ismi/part-00000-98890a34-e5f6-43a5-bfe5-d16d070ad255-c000.csv.deflate")
 ImsiDFRead.show(3)
 
-// read the file on unix line commande
-// 1) decompress the deflate file:
+/* ----------------------------------------------
+    decompresser .deflate file généré par spark
+   ---------------------------------------------- */ 
+
+// decompresser the .deflate file on unix line commande
+
+// to CSV
+// 1) decompress:
 hdfs dfs -text /user/xiaoxiao/neumann_ismi/part-00000-98890a34-e5f6-43a5-bfe5-d16d070ad255-c000.csv.deflate | hdfs dfs -put - imsi_df
-// 2) read decompressed file
+// 2) check decompressed file
 hdfs dfs -tail /user/xiaoxiao/imsi_df
+
+// to JSON
+// 1) decompress:
+hdfs dfs -text /user/xiaoxiao/neumann_ismi_json/part-00000-7f62b4e8-8bf8-4c27-9fa0-e57f5604d314-c000.json.deflate | hdfs dfs -put - imsi_json.json
+// 2) check decompressed file
+hdfs dfs -tail /user/xiaoxiao/imsi_json.json
+
+
