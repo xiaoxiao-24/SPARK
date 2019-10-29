@@ -159,3 +159,12 @@ sql("select SchoolDesc, avg(Price),count(1) from PropertySaleView where SaleCode
 // write to Hive
 PropertySale.write.saveAsTable("propertysale.PropertySale")
 
+
+
+// correlation "City" and "Price"
+val City = spark.sql("select distinct City from PropertySaleView")
+val City_DF = City.withColumn("index",row_number().over(Window.orderBy("City"))) 
+val PropertyDF = PropertySaleDS.where("SaleCode in ('0','U','UR')").join(City_DF,"City")
+val correlation = PropertyDF.stat.corr("index", "Price")
+
+

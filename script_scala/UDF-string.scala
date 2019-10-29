@@ -27,6 +27,11 @@ val toUpper  = udf[String,String](_.toUpperCase)
 pay.select(toUpper(pay("sex"))).show
 pay.withColumn("sex1",toUpper('sex)).show
 
+// methode 4
+def upper(s: String): String = s.toUpperCase
+spark.udf.register("Upper", upper _)
+spark.sql("select id, sex, Upper(sex) from Pay").show()
+
 
 // list all the functions like %pper%
 spark.catalog.listFunctions.filter('name like "%pper%").show(false)
