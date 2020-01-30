@@ -3,6 +3,7 @@
 
 
 val path = "/Users/xiaoxiaorey/Documents/Codes/sample-data/PropertySale/AlleghenyPropertySale.csv"
+// hdfs:  /user/xiaoxiao/AlleghenyPropertySale.csv
 
 // dataframe
 val PropertySale = spark.read.option("header","true").option("delimiter",",").csv(path)
@@ -153,3 +154,17 @@ sql("select avg(Price) from PropertySaleView").show(false) // 169,560
 sql("select count(distinct SchoolDesc) from PropertySaleView").show(false) //46
 // 
 sql("select SchoolDesc, avg(Price),count(1) from PropertySaleView where SaleCode in ('0','U','UR') group by SchoolDesc order by avg(Price) desc").show(false)
+
+
+// write to Hive
+PropertySale.write.saveAsTable("propertysale.PropertySale")
+
+
+
+// correlation "City" and "Price"
+val City = spark.sql("select distinct City from PropertySaleView")
+val City_DF = City.withColumn("index",row_number().over(Window.orderBy("City"))) 
+val PropertyDF = PropertySaleDS.where("SaleCode in ('0','U','UR')").join(City_DF,"City")
+val correlation = PropertyDF.stat.corr("index", "Price")
+
+

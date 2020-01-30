@@ -1,9 +1,9 @@
-// ----------------------
 // txt file to DataFrame
-// ----------------------
 
-
+// ?
 import spark.implicits._
+
+// ?
 import org.apache.spark.sql.Encoder
 import org.apache.spark.sql.catalyst.encoders.ExpressionEncoder // for RDD, who use encoders for serialization
 

@@ -1,3 +1,4 @@
+// -----------------------------
 // random dataframe
 // -----------------------------
 // add a column
@@ -5,6 +6,7 @@ val pay = Seq((0,"John","man",3000,4),(1,"Lucie","woman",2500,5)).toDF("id","nam
 
 pay.filter(col("id")===1).show
 pay.filter(col("id")===1).collect()
+
 // add new column total for the salary
 
 // method 1
