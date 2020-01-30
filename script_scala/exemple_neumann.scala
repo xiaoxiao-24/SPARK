@@ -40,7 +40,11 @@ sql("select type,count(distinct packageplan) from packageplan group by type").sh
 
 // pour le client (420040100212496): la distribution de ses calls dans la journée
 sql("select h.type,sum(answeredcalls) from behaviorcalls b join hourofday h on b.hourofday=h.hourofday where imsi = '420040100212496' group by h.type").show(false)
+<<<<<<< HEAD
 /*+--------------+------------------+                                             
+=======
++--------------+------------------+                                             
+>>>>>>> 96bfb40880462bd1680aed9fe469bcc0ff0c0bcd
 |type          |sum(answeredcalls)|
 +--------------+------------------+
 |Evening       |1019              |
@@ -48,6 +52,7 @@ sql("select h.type,sum(answeredcalls) from behaviorcalls b join hourofday h on b
 |Afternoon     |1280              |
 |Night         |779               |
 |After Midnight|407               |
+<<<<<<< HEAD
 +--------------+------------------+*/
 
 // marketing cost
@@ -60,12 +65,30 @@ sql("select max(market_cost),min(market_cost),avg(market_cost) from marketing").
 
 sql("select case when market_cost >= 0 and market_cost <= 50 then '0-50' when market_cost >= 51 and market_cost <= 100 then '50-100' else '100+' end as CostLevel,count(1) from marketing group by CostLevel").show
 /*+---------+--------+
+=======
++--------------+------------------+
+
+// marketing cost
+sql("select max(market_cost),min(market_cost),avg(market_cost) from marketing").show
++----------------+----------------+------------------+
+|max(market_cost)|min(market_cost)|  avg(market_cost)|
++----------------+----------------+------------------+
+|             125|               0|27.058273786796125|
++----------------+----------------+------------------+
+
+sql("select case when market_cost >= 0 and market_cost <= 50 then '0-50' when market_cost >= 51 and market_cost <= 100 then '50-100' else '100+' end as CostLevel,count(1) from marketing group by CostLevel").show
++---------+--------+
+>>>>>>> 96bfb40880462bd1680aed9fe469bcc0ff0c0bcd
 |CostLevel|count(1)|
 +---------+--------+
 |     0-50|   50706|
 |   50-100|    4274|
 |     100+|      19|
+<<<<<<< HEAD
 +---------+--------+*/
+=======
++---------+--------+
+>>>>>>> 96bfb40880462bd1680aed9fe469bcc0ff0c0bcd
 
 // une date le capacity d'un site et le vrai connexion
 // get the actuel connexion by site
@@ -97,7 +120,11 @@ sql("select count(1) from datalog ").show  //3361325
 
 // distribution of phone by brand
 sql("select handsettype,count(1) from imsi group by handsettype").show
+<<<<<<< HEAD
 /*+-----------+--------+                                                          
+=======
++-----------+--------+                                                          
+>>>>>>> 96bfb40880462bd1680aed9fe469bcc0ff0c0bcd
 |handsettype|count(1)|
 +-----------+--------+
 |      Nokia|   27803|
@@ -110,7 +137,11 @@ sql("select handsettype,count(1) from imsi group by handsettype").show
 |         LG|     251|
 |      Apple|    3329|
 |           |    5000|
+<<<<<<< HEAD
 +-----------+--------+*/
+=======
++-----------+--------+
+>>>>>>> 96bfb40880462bd1680aed9fe469bcc0ff0c0bcd
 
 // --------------------------------------------------------------------
 // DataFrame to CSV / JSON
